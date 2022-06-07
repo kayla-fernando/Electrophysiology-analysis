@@ -1,5 +1,3 @@
-%% REMEMBER PATH CHANGES %%
-
 %%%% OUTLINE %%%%
 % Section 1: Load data 
 % Section 2: sEPSCs
