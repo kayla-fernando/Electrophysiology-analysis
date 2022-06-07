@@ -1,5 +1,3 @@
-%% REMEMBER PATH CHANGES %%
-
 %%%% OUTLINE %%%%
 % Section 1: Sort spontaneous and synaptic activity
     % RT
