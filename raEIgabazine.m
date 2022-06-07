@@ -1,5 +1,3 @@
-%% REMEMBER PATH CHANGES %%
-
 clear all
 close all
 clc
