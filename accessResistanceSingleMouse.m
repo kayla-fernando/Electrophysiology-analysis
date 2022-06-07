@@ -1,5 +1,3 @@
-%% REMEMBER PATH CHANGES %%
-
 % Edited by Kayla Fernando (5/4/22)
 
 close all
