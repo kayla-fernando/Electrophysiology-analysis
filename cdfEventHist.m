@@ -1,4 +1,5 @@
 function [h,outputArray] = cdfEventHist(data,range,outputArray,dataType,dataUnits)
+% Edited by Kayla Fernando (5/4/22)
 % Generates a cumulative distribution function (cdf) histogram for event
 % data by randomly selecting which data points to plot based on the 
 % least number of events detected in a sweep (such that all sweeps are
