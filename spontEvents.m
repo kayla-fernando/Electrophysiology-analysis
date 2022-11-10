@@ -69,7 +69,7 @@ for ii = sweep_number(1):sweep_number(2)
     single_sweep = d(50000:end, ii);
     
     % Filter and plot each sweep
-    [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4] = plotFilteredSignal(single_sweep,run,Fs,order,Fc,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
+    [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4,threshold] = plotFilteredSignal(single_sweep,run,Fs,order,Fc,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
 
     % Find amplitudes for all detected events for all sweeps (instead of using the amplitudes app) 
     amplitudes = eventAmplitudes(ii,filtered_signal_base,event_indices,direction);
@@ -141,7 +141,7 @@ for ii = sweep_number(1):sweep_number(2)
     single_sweep = d(50000:end, ii);
     
     % Filter and plot each sweep
-    [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4] = plotFilteredSignal(single_sweep,run,Fs,order,Fc,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
+    [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4,threshold] = plotFilteredSignal(single_sweep,run,Fs,order,Fc,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
 
     % Find amplitudes for all detected events for all sweeps (instead of using the amplitudes app) 
     amplitudes = eventAmplitudes(ii,filtered_signal_base,event_indices,direction);
