@@ -74,7 +74,7 @@ savefig(h1, ['' num2str(file) '' ' EPSCs pre-gabazine']);
 % Select pre-gabazine EPSC sweeps
 allEPSC = d(:,1:10); 
 
-RaEPSC = accessE(allEPSC);
+RaEPSC = access(allEPSC);
 
 % XYZ plot of trials vs Ra vs EPSC amplitude
 h2 = figure;
