@@ -22,4 +22,6 @@ event = event(start:end);
 [fitObject,gof] = fit([1:numel(event)]',event,'exp1')
 plot(fitObject,[1:numel(event)]',event);
 
-tau = 1/fitObject.b
+tau = 1/fitObject.b % in ms
+
+[tau gof.rsquare];
