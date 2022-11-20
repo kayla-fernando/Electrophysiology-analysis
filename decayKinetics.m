@@ -14,7 +14,10 @@ mousepath = [folder '\' run '.abf'];
 clc
 
 sweep = 36; % summary sweep
-event = d(43900:50000,sweep); % include peak amplitude and enough baseline
+search = [0.880 1]; % search window in ms for PSC2
+Fs = 50000; % sampling rate in Hz
+
+event = d((Fs*search(1)):(Fs*search(2)),sweep); % include peak amplitude and enough baseline
 
 start = find(event == min(event)); % for EPSCs
 %start = find(event == max(event)); % for IPSCs
