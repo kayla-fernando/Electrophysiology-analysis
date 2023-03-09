@@ -39,7 +39,7 @@ while sweep_number <= range(2)
     sweep_number = sweep_number + 1;
 end
 
-h = histogram(outputArray,'Normalization','cdf','DisplayStyle','stairs','LineWidth',1.5); 
+h = histogram(outputArray,'Normalization','cdf','DisplayStyle','stairs','BinWidth',0.001,'LineWidth',1.5); 
 title(['Cumulative fraction ' dataType ' histogram']); 
 xlabel([dataType ' ' '(' dataUnits ')']); 
 ylabel('cumulative fraction');
