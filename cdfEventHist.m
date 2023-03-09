@@ -39,10 +39,13 @@ while sweep_number <= range(2)
     sweep_number = sweep_number + 1;
 end
 
-figure;
 h = histogram(outputArray,'Normalization','cdf','DisplayStyle','stairs','LineWidth',1.5); 
 title(['Cumulative fraction ' dataType ' histogram']); 
 xlabel([dataType ' ' '(' dataUnits ')']); 
 ylabel('cumulative fraction');
+
+% 220420: adjust renderer parameters for cdfs to export as .eps vector files
+set(gcf,'renderer','Painters')
+print -depsc -tiff -r300 -painters test.eps
 
 end
