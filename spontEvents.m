@@ -103,6 +103,9 @@ for ii = sweep_number(1):sweep_number(2)
     
 end
 
+amplitudes = vertcat(amplitudes_cell{:});
+intervals = vertcat(intervals_cell{:});
+
 % % UNCOMMENT the rest of this section to save the workspace and run the app
 % Save the current workspace
 % save filtered_signal_base
@@ -174,6 +177,9 @@ for ii = sweep_number(1):sweep_number(2)
     pause
     
 end
+
+amplitudes = vertcat(amplitudes_cell{:});
+intervals = vertcat(intervals_cell{:});
 
 % meangaba = mean(thresh(17:33)); % select IPSC sweeps, output is the average value to use for gabazine control
 
