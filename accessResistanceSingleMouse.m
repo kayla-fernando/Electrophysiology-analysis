@@ -9,10 +9,10 @@ clc
 % Preprocessing: copy original .abf file, filter at 15 kHz, create summary traces in Clampfit and calculate E/I ratios,
 % save Entire File > All Sweeps and Signals 
 
-folder = 'KF_210720_analyzed'; % Naming conventions
-run = '21720000 - Copy - analyzed - all traces'; % Clampex ABF naming conventions, refer to "E-I Ratio Stats ASTN2" Excel sheet for proper name
+folder = 'folder'; % Naming conventions
+run = 'run'; % Clampex ABF naming conventions, refer to "E-I Ratio Stats ASTN2" Excel sheet for proper name
 file = 21720000;
-basepath = 'C:\Users\kayla\My Documents\Molecular Devices\pCLAMP\Data\';
+basepath = 'basepath';
 mousepath = [folder '\' run '.abf'];
 [d,si,h] = abfload([basepath mousepath]); % Sampling at 50 kHz. d: columns number of samples in a single sweep by the number of sweeps in file; s: sampling interval in us; h: file information
 
@@ -23,10 +23,16 @@ clc
 % Select all EPSC sweeps
 allEPSC = d(:,1:10); 
 % Select all IPSC sweeps
-allIPSC = d(:,25:45); 
+allIPSC = d(:,20:40); 
 
-[RaEPSC,allaccessEPSC] = access(allEPSC);
-[RaIPSC,allaccessIPSC] = access(allIPSC);
+search = [0.250 0.260]; % search window in ms 
+Fs = 50000; % sampling rate in Hz
+
+[RaEPSC,allaccessEPSC] = access(allEPSC,search,Fs);
+[RaIPSC,allaccessIPSC] = access(allIPSC,search,Fs);
+
+avgRaEPSC = mean(RaEPSC);
+avgRaIPSC = mean(RaIPSC);
 
 % Calculate 10-90% rise time in Clampfit w/ search region from 756.5 to 800 ms
 % Copy these values into the last column of allaccessEPSC and/or allaccessIPSC 
