@@ -21,9 +21,9 @@
 % Section 5.2: cdf histograms combined
 %   Create outputArrays & cdf histograms
 %   Two-sample Komolgorov-Smirnov test
-%   Wilcoxon rank-sum test
+% Section 6: cdfs of early vs late sweeps within a single experiment
 
-% Kayla Fernando (5/4/22)
+% Kayla Fernando (3/27/23)
 % Contributions by David Herzfeld, Ph.D. (david.herzfeld@duke.edu)
 
 %% Section 1: Load data %%
@@ -380,3 +380,32 @@ forIntHist_WT_WX_I = reshape(forIntHist_WT_I,[],1);
 % % Wilcoxon rank-sum test
 % % In command window:
 % [p,h,stats] = ranksum(forAmpHist_KO_WX,forAmpHist_WT_WX)
+
+%% Section 6: cdfs of early vs late sweeps within a single experiment %%
+
+load('spontEventsOriginalKF.mat')
+
+condition = mEPSC_amp_WT;
+numExpts = size(condition,2);
+
+for k = 1:numExpts
+    
+    data = condition(:,k);
+    data(data == 0) = [];
+    
+    early = data(1:round(numel(data)*0.20),1);
+    late = data(round(numel(data)*0.80):end,1);
+    
+    early = convert2cell(early);
+    late = convert2cell(late);
+
+    h1 = cdfEventHistCells(early,forAmpHist,'amplitude','pA'); hold on
+    set(h1,'EdgeColor','k'); 
+    h2 = cdfEventHistCells(late,forAmpHist,'amplitude','pA'); 
+    set(h2,'EdgeColor','r'); 
+    legend('early sweeps','late sweeps','Location','southeast');xlim([0 500]);ylim([0 1]);
+    hold off
+    
+    saveas(gcf,['Experiment' num2str(k) '.tif']);
+
+end
