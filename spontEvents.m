@@ -33,9 +33,9 @@ clear all
 clc
 
 % Load data
-folder = 'KF_211011'; % Naming conventions
-run = '21o11003'; % Clampex ABF naming conventions
-basepath = 'Y:\\All_Staff\home\kayla\Electrophysiology\';
+folder = 'folder'; % Naming conventions
+run = 'run'; % Clampex ABF naming conventions
+basepath = 'Y:\\';
 mousepath = [folder '\' run '.abf'];
 [d,si,h] = abfload([basepath mousepath]); % Sampling at 50 kHz. d: columns number of samples in a single sweep by the number of sweeps in file; s: sampling interval in us; h: file information
 
@@ -44,7 +44,7 @@ clc
 %% Section 2: sEPSCs %%
 
 % first and last EPSC in sweep range
-sweep_number = [9 10];
+sweep_number = [1 15];
 count = [];
 amplitudes_cell = {};
 intervals_cell = {};
@@ -118,7 +118,7 @@ intervals = vertcat(intervals_cell{:});
 %% Section 3: sIPSCs %%
 
 % first and last IPSC in sweep range
-sweep_number = [38 39];
+sweep_number = [20 35];
 count = [];
 % thresh = [];
 amplitudes_cell = {};
@@ -181,7 +181,7 @@ end
 amplitudes = vertcat(amplitudes_cell{:});
 intervals = vertcat(intervals_cell{:});
 
-% meangaba = mean(thresh(17:33)); % select IPSC sweeps, output is the average value to use for gabazine control
+% meangaba = mean(thresh(20:35)); % select IPSC sweeps, output is the average value to use for gabazine control
 
 % % UNCOMMENT the rest of this section to save the workspace and run the app
 % Save the current workspace
@@ -194,9 +194,9 @@ intervals = vertcat(intervals_cell{:});
 
 %% Section 4: sIPSCs - for gabazine control %%
 
-% folder = 'KF_210818_analyzed'; %Naming conventions
-% run = '21818006 - Copy - analyzed - all traces'; %Clampex ABF naming conventions
-% basepath = 'C:\Users\kdf25\Documents\Molecular Devices\pCLAMP\Data\';
+% folder = 'folder'; %Naming conventions
+% run = 'run'; %Clampex ABF naming conventions
+% basepath = 'C:\';
 % mousepath = [folder '\' run '.abf'];
 % [d,si,h] = abfload([basepath mousepath]); %Sampling at 50 kHz. d: columns number of samples in a single sweep by the number of sweeps in file; s: sampling interval in us; h: file information
 % 
@@ -205,8 +205,8 @@ intervals = vertcat(intervals_cell{:});
 % ctrlcount = [];
 %     
 % % Create a Butterworth filter
-% gaba_sweep = d(50000:end, 63); % select gabazine sweep
-% sweep_number = 63;
+% gaba_sweep = d(50000:end, 36); % select gabazine sweep
+% sweep_number = 36;
 % % We need to know the sampling frequeny (Fs)
 % Fs = 50000; 
 % % We need to know the order of the filter to use
@@ -312,6 +312,9 @@ hold off
 % [p,h,stats] = ranksum(forAmpHist_KO_M_WX,forAmpHist_WT_M_WX)
 
 %% Section 5.2: cdf histograms combined %%
+
+% Load workspace
+load('spontEventsCopy_ms.mat');
 
 % sEPSC amplitude combined
 mEPSC_amp_KO = horzcat(mEPSC_amp_KO_M_RT_cell,mEPSC_amp_KO_F_RT_cell);
