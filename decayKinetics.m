@@ -1,4 +1,6 @@
-%% Calculating decay time constant of evoked currents by fitting a single exponential function
+%% REMEMBER PATH CHANGES %%
+
+% Calculating decay time constant of evoked currents by fitting a single exponential function
 
 % Written by Kayla Fernando (11/10/22)
 
