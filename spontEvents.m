@@ -272,10 +272,12 @@ intervals = vertcat(intervals_cell{:});
 load('spontEventsCopy_ms.mat');
 
 filename = {mIPSC_int_KO_M_RT, mIPSC_int_WT_M_RT, mIPSC_int_KO_F_RT, mIPSC_int_WT_F_RT};
+measure = 'inter-event inerval';
+unit = 'ms';
 
 % KO M
 mIPSC_int_KO_M_RT_cell = convert2cell(filename{1});
-[h1,forIntHist_KO_M_I] = cdfEventHistCells(mIPSC_int_KO_M_RT_cell,forIntHist,'inter-event interval','ms');
+[h1,forIntHist_KO_M_I] = cdfEventHistCells(mIPSC_int_KO_M_RT_cell,forIntHist,measure,unit);
 set(h1, 'EdgeColor', [0 0.4470 0.7410]);
 forIntHist_KO_M_WX_I = reshape(forIntHist_KO_M_I,[],1); 
 
@@ -283,19 +285,19 @@ hold on;
 
 % WT M
 mIPSC_int_WT_M_RT_cell = convert2cell(filename{2});
-[h2,forIntHist_WT_M_I] = cdfEventHistCells(mIPSC_int_WT_M_RT_cell,forIntHist,'inter-event interval','ms');
+[h2,forIntHist_WT_M_I] = cdfEventHistCells(mIPSC_int_WT_M_RT_cell,forIntHist,measure,unit);
 set(h2, 'EdgeColor', [0.3010 0.7450 0.9330]);
 forIntHist_WT_M_WX_I = reshape(forIntHist_WT_M_I,[],1);
 
 % KO F
 mIPSC_int_KO_F_RT_cell = convert2cell(filename{3});
-[h3,forIntHist_KO_F_I] = cdfEventHistCells(mIPSC_int_KO_F_RT_cell,forIntHist,'inter-event interval','ms');
+[h3,forIntHist_KO_F_I] = cdfEventHistCells(mIPSC_int_KO_F_RT_cell,forIntHist,measure,unit);
 set(h3, 'EdgeColor', [0.6350 0.0780 0.1840]);
 forIntHist_KO_F_WX_I = reshape(forIntHist_KO_F_I,[],1);
 
 % WT F
 mIPSC_int_WT_F_RT_cell = convert2cell(filename{4});
-[h4,forIntHist_WT_F] = cdfEventHistCells(mIPSC_int_WT_F_RT_cell,forIntHist,'inter-event interval','ms');
+[h4,forIntHist_WT_F] = cdfEventHistCells(mIPSC_int_WT_F_RT_cell,forIntHist,measure,unit);
 set(h4, 'EdgeColor', [0.8500 0.3250 0.0980]);
 forIntHist_WT_F_WX_I = reshape(forIntHist_WT_F,[],1);
 
