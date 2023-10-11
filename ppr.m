@@ -18,8 +18,8 @@ clc
 avgEPSC = d(:,47); % Select EPSC summary sweep
 avgIPSC = d(:,48); % Select IPSC summary sweep
 
-search_1 = [0.757 0.800]; % search window in ms for PSC1
-search_2 = [0.857 0.900]; % search window in ms for PSC2
+search_1 = [0.757 0.800]; % search window in s for PSC1
+search_2 = [0.857 0.900]; % search window in s for PSC2
 Fs = 50000; % sampling rate in Hz
 
 Estim1 = min(movmean(avgEPSC((Fs*search_1(1)):(Fs*search_1(2))),101)); % EPSC is a downward current, stim 1 range in samples, compare with Clampex protocol
