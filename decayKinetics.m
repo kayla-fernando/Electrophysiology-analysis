@@ -16,7 +16,7 @@ mousepath = [folder '\' run '.abf'];
 clc
 
 sweep = 36; % summary sweep
-search = [0.880 1]; % search window in ms for PSC2
+search = [0.880 1]; % search window in s for PSC2
 Fs = 50000; % sampling rate in Hz
 
 event = d((Fs*search(1)):(Fs*search(2)),sweep); % include peak amplitude and enough baseline
@@ -27,6 +27,6 @@ event = event(start:end);
 [fitObject,gof] = fit([1:numel(event)]',event,'exp1')
 plot(fitObject,[1:numel(event)]',event);
 
-tau = 1/fitObject.b % in ms
+tau = 1/fitObject.b % in s
 
 [tau gof.rsquare];
