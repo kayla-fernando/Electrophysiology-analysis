@@ -28,6 +28,6 @@ event = event(start:end);
 plot(fitObject,[1:numel(event)]',event);
 
 tau = 1/fitObject.b % in samples
-tau = tau/Fs; % in s
+tau = tau/Fs % in s
 
 [tau gof.rsquare];
