@@ -29,6 +29,8 @@ post = squeeze(post); post = post'; clc
 meanFilterFunction = @(block_struct) mean(block_struct.data);
 averagedPre = blockproc(pre, [10 1*Fs], meanFilterFunction)';
 averagedPost = blockproc(post, [10 1*Fs], meanFilterFunction)';
+% averagedPre = averagedPre(:,N:M) % no need to block process if using summary sweeps N:M 
+% averagedPost = averagedPost(:,N:M) % no need to block process if using summary sweeps N:M 
 
 % Pre-induction analysis
 figure; preEPSC1 = []; preEPSC2 = [];
