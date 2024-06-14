@@ -4,7 +4,7 @@ close all
 clear all
 clc
 
-% Preprocessing: copy original .abf file, lowpass filter at 15 kHz, create summary traces in Clampfit,
+% Preprocessing: copy original .abf file, lowpass filter at 15 kHz, baseline all sweeps,
 % save Entire File > All Sweeps and Signals 
 
 folder = 'KF_240205_analyzed';
