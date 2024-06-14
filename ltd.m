@@ -69,3 +69,9 @@ normPreEPSC2 = [];
 normPostEPSC2 = [];
     for n = 1:size(postEPSC2,1)
         normPostEPSC2(n,1) = (postEPSC2(n)/mean(preEPSC2))*100; end
+
+% Plot figures
+figure; plot(vertcat(normPreEPSC1, [NaN; NaN], normPostEPSC1),'.','MarkerSize',16); ylim([0 200])
+figure; plot(vertcat(prePPR, [NaN; NaN], postPPR),'.','MarkerSize',16); ylim([0 2])
+figure; plot(vertcat(RaPre, [NaN; NaN], RaPost),'.','MarkerSize',16); ylim([0 20])     
+RaPercentChange = ((mean(RaPost) - mean(RaPre))/abs(mean(RaPre)))*100    
