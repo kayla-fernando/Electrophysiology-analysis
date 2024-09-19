@@ -1,4 +1,5 @@
 %% REMEMBER PATH CHANGES %%
+% Written by Kayla Fernando (9/19/24)
 
 close all
 clear all
@@ -20,7 +21,7 @@ sweep_number = [1 17];
 count = [];
 amplitudes_cell = {};
 %search = [0.720 0.920];
-search = [0.600 0.830]; % search window in s 
+search = [0.630 0.830]; % search window in s 
 Fs = 50000; % sampling rate in Hz
 
 % Savitzky-Golay filter parameters
