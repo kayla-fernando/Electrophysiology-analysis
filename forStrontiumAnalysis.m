@@ -7,9 +7,9 @@ clc
 % Preprocessing: copy original .abf file, filter at 2 kHz, create summary traces in Clampfit 
 
 % Load data
-folder = 'KF_240829_analyzed'; %Naming conventions
-run = '240829_0015 - Copy - analyzed - all traces'; %Clampex ABF naming conventions, refer to "E-I Ratio Stats ASTN2" Excel sheet for proper name
-basepath = 'Z:\\home\kayla\Electrophysiology analysis\Strontium recordings\';
+folder = 'folder'; %Naming conventions
+run = 'run'; %Clampex ABF naming conventions, refer to "E-I Ratio Stats ASTN2" Excel sheet for proper name
+basepath = 'Z:\\';
 mousepath = [folder '\' run '.abf'];
 [d,si,h] = abfload([basepath mousepath]); %Sampling at 50 kHz. d: columns number of samples in a single sweep by the number of sweeps in file; s: sampling interval in us; h: file information
 
