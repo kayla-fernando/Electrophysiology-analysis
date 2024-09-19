@@ -1,6 +1,6 @@
 function varargout = plotFilteredSignalStrontium(single_sweep,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction)
 % Written by David Herzfeld, Ph.D. (david.herzfeld@duke.edu)
-% Edited by Kayla Fernando (5/4/22)
+% Edited by Kayla Fernando (9/19/24)
 % 
 % INPUTS:
 %   d: data uploaded from abfload
