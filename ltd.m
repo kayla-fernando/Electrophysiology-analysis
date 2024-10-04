@@ -42,6 +42,9 @@ for n = 1:size(averagedPre,2) % EPSC amplitudes
     preEPSC2(n,1) = -min(movmean(preTrace((Fs*search_2(1)):(Fs*search_2(2))),101)); 
 end
 hold off; title('Pre-induction 1-min average traces');
+% 220427: adjust renderer parameters for cdfs to export as .eps vector files
+set(gcf,'renderer','Painters')
+print -depsc -tiff -r300 -painters test.eps
 [RaPre,RaPre_table] = access(averagedPre,[0.115 0.120],Fs); % Ra
 prePPR = preEPSC2./preEPSC1; % PPR
 
@@ -54,6 +57,9 @@ for n = 1:size(averagedPost,2) % EPSC amplitudes
     postEPSC2(n,1) = -min(movmean(postTrace((Fs*search_2(1)):(Fs*search_2(2))),101)); 
 end
 hold off; title('Post-induction 1-min average traces');
+% 220427: adjust renderer parameters for cdfs to export as .eps vector files
+set(gcf,'renderer','Painters')
+print -depsc -tiff -r300 -painters test.eps
 [RaPost,RaPost_table] = access(averagedPost,[0.115 0.120],Fs); % Ra
 postPPR = postEPSC2./postEPSC1; % PPR
 
@@ -72,7 +78,20 @@ normPostEPSC2 = [];
         normPostEPSC2(n,1) = (postEPSC2(n)/mean(preEPSC2))*100; end
 
 % Plot figures
-figure; plot(vertcat(normPreEPSC1, nan(ind_dur,1), normPostEPSC1),'.','MarkerSize',16); title('Norm EPSC (%)'); yline([100 100], '--'); ylim([0 200])
+figure; plot(vertcat(normPreEPSC1, nan(ind_dur,1), normPostEPSC1),'.','MarkerSize',16); title('Norm EPSC1 (%)'); yline([100 100], '--'); ylim([0 200])
+% 220427: adjust renderer parameters for cdfs to export as .eps vector files
+set(gcf,'renderer','Painters')
+print -depsc -tiff -r300 -painters test.eps
+figure; plot(vertcat(normPreEPSC2, nan(ind_dur,1), normPostEPSC2),'.','MarkerSize',16); title('Norm EPSC2 (%)'); yline([100 100], '--'); ylim([0 200])
+% 220427: adjust renderer parameters for cdfs to export as .eps vector files
+set(gcf,'renderer','Painters')
+print -depsc -tiff -r300 -painters test.eps
 figure; plot(vertcat(prePPR, nan(ind_dur,1), postPPR),'.','MarkerSize',16); title('PPR'); ylim([0 2])
+% 220427: adjust renderer parameters for cdfs to export as .eps vector files
+set(gcf,'renderer','Painters')
+print -depsc -tiff -r300 -painters test.eps
 figure; plot(vertcat(RaPre, nan(ind_dur,1), RaPost),'.','MarkerSize',16); title('Ra'); ylim([0 40])     
+% 220427: adjust renderer parameters for cdfs to export as .eps vector files
+set(gcf,'renderer','Painters')
+print -depsc -tiff -r300 -painters test.eps
 RaPercentChange = ((mean(RaPost) - mean(RaPre))/abs(mean(RaPre)))*100    
