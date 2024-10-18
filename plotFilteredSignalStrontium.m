@@ -107,6 +107,7 @@ if nargout > 0
     varargout{5} = ax3;
     varargout{6} = ax4;
     varargout{7} = threshold;
+    vargargout{8} = gof;
 end
 
 disp('Press any key to continue')
