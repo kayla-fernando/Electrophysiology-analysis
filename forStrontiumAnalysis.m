@@ -5,7 +5,7 @@ close all
 clear all
 clc
 
-% Preprocessing: copy original .abf file, filter at 2 kHz, create summary traces in Clampfit 
+% Preprocessing: copy original .abf file, filter at 2 kHz 
 
 % Load data
 folder = 'folder'; %Naming conventions
