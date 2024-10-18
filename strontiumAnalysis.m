@@ -28,7 +28,7 @@ sav_golay_order = 2; % 2nd order polynomial (line/first derivative)
 sav_golay_bin_width = 151;
 
 % Threshold parameters
-thresholdFactor = 1;
+thresholdFactor = 1.5;
 blanking_indices = 500;
 direction = 'down'; 
 
