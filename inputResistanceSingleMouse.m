@@ -5,9 +5,9 @@ clear all
 clc 
 
 % Assumes using original recordings from Clampex
-folder = 'KF_241005'; % Naming conventions
-run = '24o05_0000'; % Clampex ABF naming conventions, refer to "E-I Ratio Stats ASTN2" Excel sheet for proper name
-basepath = 'Z:\\home\kayla\Electrophysiology\';
+folder = 'folder'; % Naming conventions
+run = 'run'; % Clampex ABF naming conventions
+basepath = 'basepath';
 mousepath = [folder '\' run '.abf'];
 [d,si,h] = abfload([basepath mousepath]); % Sampling at 50 kHz. d: columns number of samples in a single sweep by the number of sweeps in file; s: sampling interval in us; h: file information
 
@@ -18,7 +18,7 @@ clc
 % Select all EPSC sweeps
 allEPSC = d(:,1:10); 
 % Select all IPSC sweeps
-allIPSC = d(:,22:32); 
+allIPSC = d(:,11:20); 
 
 baseline_search = [0.001 0.100]; % search window in s
 membrane_search = [0.200 0.300]; % search window in s
