@@ -2,14 +2,12 @@ close all
 clear all
 clc
 
-%% Load data %%
-
 % Preprocessing: copy original .abf file, filter at 15 kHz, create summary traces in Clampfit and calculate E/I ratios,
 % save Entire File > All Sweeps and Signals 
 
-folder = 'KF_210628_analyzed'; % Naming conventions
-run = '21628008 - Copy - analyzed - all traces'; % Clampex ABF naming conventions, refer to "E-I Ratio Stats ASTN2" Excel sheet for proper name
-basepath = 'C:\Users\kdf25\Documents\Molecular Devices\pCLAMP\Data\';
+folder = 'folder'; % Naming conventions
+run = 'run'; % Clampex ABF naming conventions, refer to "E-I Ratio Stats ASTN2" Excel sheet for proper name
+basepath = 'basepath';
 mousepath = [folder '\' run '.abf'];
 [d,si,h] = abfload([basepath mousepath]); % Sampling at 50 kHz. d: columns number of samples in a single sweep by the number of sweeps in file; s: sampling interval in us; h: file information
 
