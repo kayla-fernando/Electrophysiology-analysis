@@ -23,8 +23,23 @@ allEPSC = d(:,1:10);
 % Select all IPSC sweeps
 allIPSC = d(:,11:20); 
 
+baseline_search = [0.001 0.100]; % search window in s
 search = [0.250 0.260]; % search window in s 
 Fs = 50000; % sampling rate in Hz
+
+% Subtract baseline from all traces
+for ii = 1:size(allEPSC,2)
+    baselineEPSC(ii) = mean(allEPSC((Fs*baseline_search(1)-49):(Fs*baseline_search(2)),ii));
+end
+for ii = 1:size(allEPSC,2)
+    allEPSC(:,ii) = allEPSC(:,ii) - baselineEPSC(ii);
+end
+for ii = 1:size(allIPSC,2)
+    baselineIPSC(ii) = mean(allIPSC((Fs*baseline_search(1)-49):(Fs*baseline_search(2)),ii));
+end
+for ii = 1:size(allIPSC,2)
+    allIPSC(:,ii) = allIPSC(:,ii) - baselineIPSC(ii);
+end
 
 [RaEPSC,allaccessEPSC] = access(allEPSC,search,Fs);
 [RaIPSC,allaccessIPSC] = access(allIPSC,search,Fs);
@@ -32,11 +47,13 @@ Fs = 50000; % sampling rate in Hz
 avgRaEPSC = mean(RaEPSC);
 avgRaIPSC = mean(RaIPSC);
 
+%% Plot access resistance against 10-90% rise time
+
+% Assumes using preprocessed recordings in Clampex
+
 % Calculate 10-90% rise time in Clampfit w/ search region from 756.5 to 800 ms
 % Copy these values into the last column of allaccessEPSC and/or allaccessIPSC 
 % If value is "not found" on Clampfit, change to NaN in Matlab then execute next section
-
-%% Plot access resistance against 10-90% rise time %%
 
 allaccessEPSC(any(isnan(allaccessEPSC),2),:) = []; % Gets rid of rows that have NaN
 ERa = allaccessEPSC(:,4);
