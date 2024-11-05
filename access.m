@@ -3,7 +3,7 @@ function varargout = access(sweeps,search,Fs)
 % Calculate access resistance (Ra) for all determined range of sweeps 
 %   Inputs:
 %       sweeps = sweeps to analyze
-%       search = search window in ms, formatted [t1 t2] 
+%       search = search window in s, formatted [t1 t2] 
 %       Fs = sampling rate in Hz
 %   Outputs:
 %       [out] = the last column of allAccess, Ra in megaohms (MOhm)
@@ -19,9 +19,9 @@ sizeSweeps = size(sweeps);
     end
 
 if nargout == 1    
-    varargout{1} = allAccess(:,4);
+    varargout{1} = allAccess(:,end);
 elseif nargout == 2
-    varargout{1} = allAccess(:,4);
+    varargout{1} = allAccess(:,end);
     varargout{2} = allAccess;
 end
 end
