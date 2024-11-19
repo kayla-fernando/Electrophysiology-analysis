@@ -7,9 +7,9 @@ clear all
 clc 
 
 % Assumes using original recordings from Clampex
-folder = 'KF_241116'; % Naming conventions
-run = '2024_11_16_0009'; % Clampex ABF naming conventions
-basepath = 'Z:\\home\kayla\Electrophysiology\';
+folder = 'folder'; % Naming conventions
+run = 'run'; % Clampex ABF naming conventions
+basepath = 'Z:\\';
 mousepath = [folder '\' run '.abf'];
 [d,si,h] = abfload([basepath mousepath]); % Sampling at 50 kHz. d: columns number of samples in a single sweep by the number of sweeps in file; s: sampling interval in us; h: file information
 
@@ -18,9 +18,9 @@ clc
 %% Calculate holding current for all EPSC sweeps and all IPSC sweeps %%
 
 % Select all EPSC sweeps
-allEPSC = d(:,13:27);
+allEPSC = d(:,1:10);
 % Select all IPSC sweeps
-allIPSC = d(:,1:10); 
+allIPSC = d(:,11:20); 
 
 baseline_search = [0.001 0.100]; % search window in s
 Fs = 50000; % sampling rate in Hz
