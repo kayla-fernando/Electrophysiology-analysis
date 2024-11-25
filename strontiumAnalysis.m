@@ -8,9 +8,9 @@ clc
 % Preprocessing: copy original .abf file, filter at 2 kHz
 
 % Load data
-folder = 'KF_241108_analyzed'; %Naming conventions
-run = '241108_0000 - Copy - analyzed - all traces'; %Clampex ABF naming conventions
-basepath = 'Z:\\home\kayla\Electrophysiology analysis\Strontium recordings\';
+folder = 'folder'; %Naming conventions
+run = 'run'; %Clampex ABF naming conventions
+basepath = 'Z:\\';
 mousepath = [folder '\' run '.abf'];
 [d,si,h] = abfload([basepath mousepath]); %Sampling at 50 kHz. d: columns number of samples in a single sweep by the number of sweeps in file; s: sampling interval in us; h: file information
 
