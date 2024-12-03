@@ -45,8 +45,11 @@ for ii = sweep_number(1):sweep_number(2)
         event_indices = event_indices(2:end); %false positive
     end
     for n = 1:length(event_indices)
-        if event_indices(n)+450 < length(filtered_signal_base)
+        if event_indices(n)+450 < length(filtered_signal_base) & event_indices(n) > 50
             forPlotting{ii}(:,n) = filtered_signal_base(event_indices(n)-50:event_indices(n)+450); % 1 ms pre-dervative and 9 ms post-derivative
+        elseif event_indices(n)+450 < length(filtered_signal_base) & event_indices(n) < 50
+            forPlotting{ii}(:,n) = vertcat(NaN(501-length(filtered_signal_base(event_indices(n)-event_indices(n)+1:event_indices(n)+450)),1),...
+            filtered_signal_base(event_indices(n)-event_indices(n)+1:event_indices(n)+450));
         else
             forPlotting{ii}(:,n) = vertcat(filtered_signal_base(event_indices(n)-50:length(filtered_signal_base)),...
             NaN(501-length(filtered_signal_base(event_indices(n)-50:length(filtered_signal_base))),1));
