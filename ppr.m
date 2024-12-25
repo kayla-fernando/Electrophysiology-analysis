@@ -2,7 +2,7 @@ close all
 clear all
 clc
 
-% Preprocessing: copy original .abf file, filter at 15 kHz, create summary traces in Clampfit and calculate E/I ratios,
+% Preprocessing: copy original .abf file, lowpass filter at 15 kHz, create summary traces in Clampfit and calculate E/I ratios,
 % save Entire File > All Sweeps and Signals 
 
 % Load data
