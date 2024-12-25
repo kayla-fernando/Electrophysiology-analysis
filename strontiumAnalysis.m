@@ -5,9 +5,18 @@ close all
 clear all
 clc
 
-% Preprocessing: copy original .abf file, filter at 2 kHz
+% Preprocessing: copy original .abf file, lowpass filter at 2 kHz
 
-% Load data
+% Load original data just for plotting purposes
+folder1 = 'folder'; %Naming conventions
+run1 = 'run'; %Clampex ABF naming conventions
+basepath1 = 'Z:\\';
+mousepath1 = [folder1 '\' run1 '.abf'];
+[d1,si1,h1] = abfload([basepath1 mousepath1]); %Sampling at 50 kHz. d: columns number of samples in a single sweep by the number of sweeps in file; s: sampling interval in us; h: file information
+
+clc
+
+% Load filtered data
 folder = 'folder'; %Naming conventions
 run = 'run'; %Clampex ABF naming conventions
 basepath = 'Z:\\';
@@ -34,12 +43,14 @@ direction = 'down';
 
 forPlotting = cell(1,(sweep_number(2)-sweep_number(1)+1));
 for ii = sweep_number(1):sweep_number(2)
-    
+    % Original sweep just for plotting purposes
+    original_sweep = d1((Fs*search(1)):(Fs*search(2)), ii);
+
     % Sweep to analyze
     single_sweep = d((Fs*search(1)):(Fs*search(2)), ii);
     
     % Filter and plot each sweep
-    [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4,threshold,gof] = plotFilteredSignalStrontium(single_sweep,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
+    [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4,ax5,threshold,gof] = plotFilteredSignalStrontium(original_sweep,single_sweep,run1,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
     goodness_of_fit = gof.rsquare
     if ismember(1,event_indices) == 1
         event_indices = event_indices(2:end); %false positive
@@ -66,12 +77,12 @@ end
 
 amplitudes = vertcat(amplitudes_cell{:});
 forPlotting = horzcat(forPlotting{:});
-figure;
+figure; 
 for n = 1:size(forPlotting,2)
     plot(forPlotting(:,n));
     hold on
 end
-plot(mean(forPlotting,2,'omitnan'),'k','LineWidth',2)
+plot(mean(forPlotting,2,'omitnan'),'k','LineWidth',2); title('Aligned detected events');
 
 %% Make a histogram showing distribution of event amplitudes
 
