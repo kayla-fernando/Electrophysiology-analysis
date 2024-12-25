@@ -23,7 +23,7 @@ function varargout = plotFilteredSignalStrontium(single_sweep,run,sav_golay_orde
     figure;
     ax1 = subplot(4, 1, 1);
     plot(single_sweep); 
-    title(['Original signal: ' run]); 
+    title(['Filtered signal: ' run]); 
     ylabel('Amplitude (pA)');
  
     % Fit an exponential and subtract from the original signal
