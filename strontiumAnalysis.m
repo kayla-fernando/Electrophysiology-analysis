@@ -25,7 +25,7 @@ mousepath = [folder '\' run '.abf'];
 
 clc
 
-% first and last EPSC in sweep range
+% First and last EPSC in sweep range
 sweep_number = [1 10];
 count = [];
 amplitudes_cell = {};
