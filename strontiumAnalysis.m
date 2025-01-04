@@ -30,6 +30,7 @@ sweep_number = [1 10];
 count = [];
 amplitudes_cell = {};
 search = [0.730 0.925]; % search window in s 
+control_search = [1.3 1.5]; % search window of last 200 ms of recording
 Fs = 50000; % sampling rate in Hz
 
 % Savitzky-Golay filter parameters
@@ -40,6 +41,8 @@ sav_golay_bin_width = 151;
 thresholdFactor = 1.5;
 blanking_indices = 500;
 direction = 'down'; 
+
+%% Event detection (run separately; workspace output will be overwritten)
 
 forPlotting = cell(1,(sweep_number(2)-sweep_number(1)+1));
 for ii = sweep_number(1):sweep_number(2)
@@ -52,6 +55,50 @@ for ii = sweep_number(1):sweep_number(2)
     % Filter and plot each sweep
     [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4,ax5,threshold,gof] = plotFilteredSignalStrontium(original_sweep,single_sweep,run1,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
     goodness_of_fit = gof.rsquare
+    if ismember(1,event_indices) == 1
+        event_indices = event_indices(2:end); %false positive
+    end
+    for n = 1:length(event_indices)
+        if event_indices(n)+450 < length(filtered_signal_base) & event_indices(n) > 50
+            forPlotting{ii}(:,n) = filtered_signal_base(event_indices(n)-50:event_indices(n)+450); % 1 ms pre-dervative and 9 ms post-derivative
+        elseif event_indices(n)+450 < length(filtered_signal_base) & event_indices(n) <= 50
+            forPlotting{ii}(:,n) = vertcat(NaN(501-length(filtered_signal_base(event_indices(n)-event_indices(n)+1:event_indices(n)+450)),1),...
+            filtered_signal_base(event_indices(n)-event_indices(n)+1:event_indices(n)+450));
+        else
+            forPlotting{ii}(:,n) = vertcat(filtered_signal_base(event_indices(n)-50:length(filtered_signal_base)),...
+            NaN(501-length(filtered_signal_base(event_indices(n)-50:length(filtered_signal_base))),1));
+        end
+    end
+
+    % Find amplitudes for all detected events for all sweeps (instead of using the amplitudes app) 
+    amplitudes = eventAmplitudes(ii,filtered_signal_base,event_indices,direction);
+    amplitudes_cell{ii} = amplitudes(:,ii);
+    amplitudes_cell = amplitudes_cell(~cellfun('isempty',amplitudes_cell));
+    [max_amp_events, idx] = max(cellfun('size',amplitudes_cell,1));
+
+end
+
+amplitudes = vertcat(amplitudes_cell{:});
+forPlotting = horzcat(forPlotting{:});
+figure; 
+for n = 1:size(forPlotting,2)
+    plot(forPlotting(:,n));
+    hold on
+end
+plot(mean(forPlotting,2,'omitnan'),'k','LineWidth',2); title('Aligned detected events');
+
+%% Event detection of last 200 ms of recording (run separately; workspace output will be overwritten)
+
+forPlotting = cell(1,(sweep_number(2)-sweep_number(1)+1));
+for ii = sweep_number(1):sweep_number(2)
+    % Original sweep just for plotting purposes
+    original_sweep = d1((Fs*control_search(1)):(Fs*control_search(2)), ii);
+
+    % Sweep to analyze
+    single_sweep = d((Fs*control_search(1)):(Fs*control_search(2)), ii);
+    
+    % Filter and plot each sweep
+    [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4,threshold] = plotFilteredSignalControlStrontium(original_sweep,single_sweep,run1,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
     if ismember(1,event_indices) == 1
         event_indices = event_indices(2:end); %false positive
     end
