@@ -1,4 +1,4 @@
-function varargout = plotFilteredSignalControlStrontium(original_sweep,single_sweep,run1,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction)
+function varargout = plotFilteredSignalControlStrontium(original_sweep,single_sweep,run1,run,sav_golay_order,sav_golay_bin_width,thresholdsForControl,ii,blanking_indices,direction)
 % Written by David Herzfeld, Ph.D. (david.herzfeld@duke.edu)
 % Edited by Kayla Fernando (5/4/22)
 % 
@@ -54,7 +54,7 @@ function varargout = plotFilteredSignalControlStrontium(original_sweep,single_sw
     plot(dydx); 
      
     % Take the standard deviation of the filtered signal and ask for x * above the standard deviations as the threshold
-    threshold = thresholdFactor * std(dydx); 
+    threshold = thresholdsForControl(ii); 
     % Let's write a very simple threshold and blank algorithm, counting the number of events and where they occur.
     event_indices = []; % A list of indices where threshold crossing occurs 
     state = 0; % A state variable 
@@ -104,6 +104,6 @@ if nargout > 0
 end
 
 disp('Press any key to continue')
-pause 
+%pause 
 
 end
