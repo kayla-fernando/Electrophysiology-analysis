@@ -26,11 +26,22 @@ mousepath = [folder '\' run '.abf'];
 clc
 
 % First and last EPSC in sweep range
-sweep_number = [1 10];
+sweep_number = [1 20];
+num_pulses = 5; % number of PF pulses, determines search window
 count = [];
 amplitudes_cell = {};
-search = [0.730 0.925]; % search window in s 
-control_search = [1.3 1.5]; % search window of last 200 ms of recording
+if num_pulses == 3
+    search = [0.472 0.672]; % search window in s
+elseif num_pulses == 4
+    search = [0.482 0.682]; % search window in s
+elseif num_pulses == 5
+    search = [0.492 0.692]; % search window in s
+elseif num_pulses == 6
+    search = [0.502 0.702]; % search window in s
+elseif num_pulses == 7
+    search = [0.512 0.712]; % search window in s
+end
+control_search = [2.8 3]; %[0.800 1.0]; % search window of last 200 ms of recording
 Fs = 50000; % sampling rate in Hz
 
 % Savitzky-Golay filter parameters
@@ -38,8 +49,8 @@ sav_golay_order = 2; % 2nd order polynomial (line/first derivative)
 sav_golay_bin_width = 151;
 
 % Threshold parameters
-thresholdFactor = 1.5;
-blanking_indices = 500;
+thresholdFactor = 2;
+blanking_indices = 200;
 direction = 'down'; 
 
 %% Event detection (run separately; workspace output will be overwritten)
@@ -91,6 +102,7 @@ plot(mean(forPlotting,2,'omitnan'),'k','LineWidth',2); title('Aligned detected e
 
 forPlotting = cell(1,(sweep_number(2)-sweep_number(1)+1));
 for ii = sweep_number(1):sweep_number(2)
+
     % Original sweep just for plotting purposes
     original_sweep = d1((Fs*control_search(1)):(Fs*control_search(2)), ii);
 
