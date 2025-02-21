@@ -53,7 +53,7 @@ function varargout = plotFilteredSignalControlStrontium(original_sweep,single_sw
     ax4 = subplot(4, 1, 4);
     plot(dydx); 
      
-    % Take the standard deviation of the filtered signal and ask for x * above the standard deviations as the threshold
+    % Use the calculated threshold from the experimental time window of the same sweep
     threshold = thresholdsForControl(ii); 
     % Let's write a very simple threshold and blank algorithm, counting the number of events and where they occur.
     event_indices = []; % A list of indices where threshold crossing occurs 
