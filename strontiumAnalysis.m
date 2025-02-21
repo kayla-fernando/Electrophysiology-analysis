@@ -2,7 +2,11 @@
 % Written by Kayla Fernando (9/19/24)
 
 close all
-clear all
+if exist('thresholdsForControl','var') == 1
+    clearvars -except thresholdsForControl
+else
+    clear all
+end
 clc
 
 % Preprocessing: copy original .abf file, lowpass filter at 2 kHz
@@ -66,6 +70,7 @@ for ii = sweep_number(1):sweep_number(2)
     % Filter and plot each sweep
     [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4,ax5,threshold,gof] = plotFilteredSignalStrontium(original_sweep,single_sweep,run1,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
     goodness_of_fit = gof.rsquare
+    thresholdsForControl{ii} = threshold;
     if ismember(1,event_indices) == 1
         event_indices = event_indices(2:end); %false positive
     end
@@ -91,6 +96,7 @@ end
 
 amplitudes = vertcat(amplitudes_cell{:});
 forPlotting = horzcat(forPlotting{:});
+thresholdsForControl = cell2mat(thresholdsForControl)';
 figure; 
 for n = 1:size(forPlotting,2)
     plot(forPlotting(:,n));
@@ -110,7 +116,7 @@ for ii = sweep_number(1):sweep_number(2)
     single_sweep = d((Fs*control_search(1)):(Fs*control_search(2)), ii);
     
     % Filter and plot each sweep
-    [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4,threshold] = plotFilteredSignalControlStrontium(original_sweep,single_sweep,run1,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
+    [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4,threshold] = plotFilteredSignalControlStrontium(original_sweep,single_sweep,run1,run,sav_golay_order,sav_golay_bin_width,thresholdsForControl,ii,blanking_indices,direction);
     if ismember(1,event_indices) == 1
         event_indices = event_indices(2:end); %false positive
     end
@@ -127,10 +133,14 @@ for ii = sweep_number(1):sweep_number(2)
     end
 
     % Find amplitudes for all detected events for all sweeps (instead of using the amplitudes app) 
-    amplitudes = eventAmplitudes(ii,filtered_signal_base,event_indices,direction);
-    amplitudes_cell{ii} = amplitudes(:,ii);
-    amplitudes_cell = amplitudes_cell(~cellfun('isempty',amplitudes_cell));
-    [max_amp_events, idx] = max(cellfun('size',amplitudes_cell,1));
+    if ~isempty(amplitudes_cell) == 1
+        amplitudes = eventAmplitudes(ii,filtered_signal_base,event_indices,direction);
+        amplitudes_cell{ii} = amplitudes(:,ii);
+        amplitudes_cell = amplitudes_cell(~cellfun('isempty',amplitudes_cell));
+        [max_amp_events, idx] = max(cellfun('size',amplitudes_cell,1));
+    else
+        continue
+    end
 
 end
 
