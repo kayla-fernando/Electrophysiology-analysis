@@ -1,4 +1,4 @@
-function varargout = plotFilteredSignalStrontium(original_sweep,single_sweep,run1,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction)
+function varargout = plotFilteredSignalStrontium(original_sweep,single_sweep,baseline_for_thresh,run1,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction)
 % Written by David Herzfeld, Ph.D. (david.herzfeld@duke.edu)
 % Edited by Kayla Fernando (5/4/22)
 % 
@@ -64,8 +64,8 @@ function varargout = plotFilteredSignalStrontium(original_sweep,single_sweep,run
     ax5 = subplot(5, 1, 5);
     plot(dydx); 
      
-    % Take the standard deviation of the filtered signal and ask for x * above the standard deviations as the threshold
-    threshold = thresholdFactor * std(dydx); 
+    % Take the standard deviation of the derivative of the baseline period and ask for x * above the standard deviations as the threshold
+    threshold = thresholdFactor * std(-conv(baseline_for_thresh, g(:,2), 'same')); 
     % Let's write a very simple threshold and blank algorithm, counting the number of events and where they occur.
     event_indices = []; % A list of indices where threshold crossing occurs 
     state = 0; % A state variable 
@@ -118,12 +118,12 @@ end
 
 disp('Press any key to continue')
 
-% Overlay filtered signal over original signal to assess possible asliasing
-% Baseline the original signal using the average of the bottom 50% of values
-original_sweep_sort = sort(-original_sweep); % inverting the signal so that events are positive-going
-baseline = -mean(original_sweep_sort(1:round(length(original_sweep_sort)*0.50))); % inversing the sign of the baseline value
-original_sweep_base = original_sweep - baseline; % subtract this value to shift the filtered signal down
-figure; plot(original_sweep_base); hold on; plot(single_sweep); title ('Original (blue) & filtered (orange)');
+% % Overlay filtered signal over original signal to assess possible asliasing
+% % Baseline the original signal using the average of the bottom 50% of values
+% original_sweep_sort = sort(-original_sweep); % inverting the signal so that events are positive-going
+% baseline = -mean(original_sweep_sort(1:round(length(original_sweep_sort)*0.50))); % inversing the sign of the baseline value
+% original_sweep_base = original_sweep - baseline; % subtract this value to shift the filtered signal down
+% figure; plot(original_sweep_base); hold on; plot(single_sweep); title ('Original (blue) & filtered (orange)');
 
 pause 
 
