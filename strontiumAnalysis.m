@@ -59,16 +59,23 @@ direction = 'down';
 
 %% Event detection (run separately; workspace output will be overwritten)
 
+mkdir(['Z:\\home\kayla\Figures\Strontium event detection\' folder '\' run1 '\' num2str(thresholdFactor) 'SD']);
+newFolder = ['Z:\\home\kayla\Figures\Strontium event detection\' folder '\' run1 '\' num2str(thresholdFactor) 'SD'];
+
 forPlotting = cell(1,(sweep_number(2)-sweep_number(1)+1));
 for ii = sweep_number(1):sweep_number(2)
     % Original sweep just for plotting purposes
     original_sweep = d1((Fs*search(1)):(Fs*search(2)), ii);
-
+   
     % Sweep to analyze
     single_sweep = d((Fs*search(1)):(Fs*search(2)), ii);
+
+    % Baseline period to use for threshold determination and event detection
+    baseline_for_thresh = d((Fs*0.001):(Fs*0.101), ii);
     
     % Filter and plot each sweep
-    [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4,ax5,threshold,gof] = plotFilteredSignalStrontium(original_sweep,single_sweep,run1,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
+    [filtered_signal_base,event_indices,ax1,ax2,ax3,ax4,ax5,threshold,gof] = plotFilteredSignalStrontium(original_sweep,single_sweep,baseline_for_thresh,run1,run,sav_golay_order,sav_golay_bin_width,thresholdFactor,blanking_indices,direction);
+    cd(newFolder); savefig([mat2str(ii) '.fig']); cd('Z:\\home\kayla\MATLAB\Electrophysiology code');
     goodness_of_fit = gof.rsquare
     thresholdsForControl{ii} = threshold;
     if ismember(1,event_indices) == 1
@@ -95,14 +102,15 @@ for ii = sweep_number(1):sweep_number(2)
 end
 
 amplitudes = vertcat(amplitudes_cell{:});
-forPlotting = horzcat(forPlotting{:});
 thresholdsForControl = cell2mat(thresholdsForControl)';
+forPlotting = horzcat(forPlotting{:});
 figure; 
 for n = 1:size(forPlotting,2)
     plot(forPlotting(:,n));
     hold on
 end
 plot(mean(forPlotting,2,'omitnan'),'k','LineWidth',2); title('Aligned detected events');
+cd(newFolder); savefig('Aligned detected events.fig'); cd('Z:\\home\kayla\MATLAB\Electrophysiology code');
 
 %% Event detection of last 200 ms of recording (run separately; workspace output will be overwritten)
 
