@@ -14,9 +14,9 @@ for n = 1:length(eventTimes)
         % Amplitude determined by calculating the mean of a 101-point moving window over the first 1500 
         % samples of a detected event, then finding the minimum/maximum value of these moving means
         if strcmp(direction, 'down') % sEPSCs 
-            amplitudes(n,ii) = -min(movmean(samples(eventTimes(n):eventTimes(n)+1500),101));
+            amplitudes(n,ii) = -min(movmean(samples(eventTimes(n):eventTimes(n)+500),51));
         elseif strcmp(direction, 'up') % sIPSCs
-            amplitudes(n,ii) = max(movmean(samples(eventTimes(n):eventTimes(n)+1500),101));
+            amplitudes(n,ii) = max(movmean(samples(eventTimes(n):eventTimes(n)+500),51));
         end
     end
 end
