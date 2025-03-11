@@ -10,8 +10,8 @@ function amplitudes = eventAmplitudes(ii, samples, eventTimes, direction)
 %       amplitudes = array of all event amplitudes for all sweeps, rows: number of events detected (n), columns: number of sweeps analyzed (ii)
 
 for n = 1:length(eventTimes)
-    if eventTimes(n)+1500 < length(samples) % don't calculate the last event amplitude if you can't get the appropriate search window
-        % Amplitude determined by calculating the mean of a 101-point moving window over the first 1500 
+    if eventTimes(n)+500 < length(samples) % don't calculate the last event amplitude if you can't get the appropriate search window
+        % Amplitude determined by calculating the mean of a 51-point moving window over the first 500 
         % samples of a detected event, then finding the minimum/maximum value of these moving means
         if strcmp(direction, 'down') % sEPSCs 
             amplitudes(n,ii) = -min(movmean(samples(eventTimes(n):eventTimes(n)+500),51));
