@@ -7,24 +7,26 @@ clc
 % Preprocessing: copy original .abf file, lowpass filter at 15 kHz, baseine all sweeps,
 % save Entire File > All Sweeps and Signals 
 
-folder = 'CH_241002_analyzed';
+folder = 'folder';
 basepath = 'Z:\\home\kayla\Electrophysiology analysis\PF-PC LTD\';
 search_1 = [0.617 0.667]; % search window in s for EPSC1
 search_2 = [0.717 0.767]; % search window in s for EPSC2
 Fs = 50000; % sampling rate in Hz
-ind_dur = 7; % induction duration in minutes
+ind_dur = 5; % induction duration in minutes
 
 % Load pre-induction data 
-run1 = '241002_0012 - Copy - analyzed - all traces';
+run1 = 'run1';
 mousepath1 = [folder '\' run1 '.abf'];
 [pre,si1,h1] = abfload([basepath mousepath1]); 
-pre = squeeze(pre); pre = pre'; pre = pre(1:50,:); clc
+pre = squeeze(pre); pre = pre'; %pre = pre(1:50,:); 
+clc
 
 % Load post-induction data 
-run2 = '241002_0017 - Copy - analyzed - all traces'; 
+run2 = 'run2'; 
 mousepath2 = [folder '\' run2 '.abf'];
 [post,si2,h2] = abfload([basepath mousepath2]); 
-post = squeeze(post); post = post'; clc
+post = squeeze(post); post = post'; %post = post(1:150,:); 
+clc
 
 % Average every 10 sweeps (1-min bins)
 meanFilterFunction = @(block_struct) mean(block_struct.data);
@@ -90,8 +92,10 @@ figure; plot(vertcat(prePPR, nan(ind_dur,1), postPPR),'.','MarkerSize',16); titl
 % 220427: adjust renderer parameters for cdfs to export as .eps vector files
 set(gcf,'renderer','Painters')
 print -depsc -tiff -r300 -painters test.eps
-figure; plot(vertcat(RaPre, nan(ind_dur,1), RaPost),'.','MarkerSize',16); title('Ra'); ylim([0 40])     
+figure; plot(vertcat(RaPre, nan(ind_dur,1), RaPost),'.','MarkerSize',16); title('Ra'); ylim([0 10])     
 % 220427: adjust renderer parameters for cdfs to export as .eps vector files
 set(gcf,'renderer','Painters')
 print -depsc -tiff -r300 -painters test.eps
 RaPercentChange = ((mean(RaPost) - mean(RaPre))/abs(mean(RaPre)))*100    
+txt = ['Ra % Change = ' num2str(RaPercentChange)];
+text(1,9,txt);
