@@ -97,5 +97,4 @@ figure; plot(vertcat(RaPre, nan(ind_dur,1), RaPost),'.','MarkerSize',16); title(
 set(gcf,'renderer','Painters')
 print -depsc -tiff -r300 -painters test.eps
 RaPercentChange = ((mean(RaPost) - mean(RaPre))/abs(mean(RaPre)))*100    
-txt = ['Ra % Change = ' num2str(RaPercentChange)];
-text(1,9,txt);
+txt = ['Ra % Change = ' num2str(RaPercentChange)]; text(1,9,txt);
