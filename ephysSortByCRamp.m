@@ -1,3 +1,5 @@
+% Weighted linear regression
+
 % Inputs
 
 clearvars -except x y
@@ -67,3 +69,4 @@ text(xPos, yPos, txt, ...
     'FontSize', 11, ...
     'BackgroundColor', 'w', ...
     'EdgeColor', 'k');
+
