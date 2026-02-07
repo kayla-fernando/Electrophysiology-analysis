@@ -14,7 +14,7 @@ mousepath = [folder '\' run '.abf'];
 
 clc
 
-% Calculate PPR for both EPSC and IPSC
+% Calculate amplitude, EI, and PPR for both EPSC and IPSC
 avgEPSC = d(:,47); % Select EPSC summary sweep
 avgIPSC = d(:,48); % Select IPSC summary sweep
 
@@ -33,3 +33,4 @@ ePPR = Estim2/Estim1;
 iPPR = Istim2/Istim1;
 
 allPPR = [Estim1 Estim2 Istim1 Istim2 EI ePPR iPPR];
+
