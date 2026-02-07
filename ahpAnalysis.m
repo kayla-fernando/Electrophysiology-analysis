@@ -1,3 +1,5 @@
+%% Sspk AHP
+
 close all
 clear all
 clc
@@ -5,13 +7,13 @@ clc
 % Load data
 folder = 'folder'; 
 run = 'run'; 
-basepath = 'Z:\\basepath';
+basepath = 'Z:\basepath';
 mousepath = [folder '\' run '.abf'];
 [d,si,h] = abfload([basepath mousepath]); %Sampling at 50 kHz. d: columns number of samples in a single sweep by the number of sweeps in file; s: sampling interval in us; h: file information
 clc
 
 % Select all induction sweeps
-sweep = d(:,1);
+sweep = d(:,1:30);
 
 baseline_search = [0.001 0.100]; % search window in s
 event_search = [0.148 0.152]; % 1st simple spike AP
@@ -49,21 +51,75 @@ AHP = AHP';
 mV_sample = mean(AHP) % mV*samples
 mV_ms = mean(AHP) * (1/Fs) * 1000 % mV*ms
 
-%%
+%% Cspk AHP
+
+close all
+clear all
+clc
+
+% Preprocessing: lowpass filter at 15 kHz, baseline, create summary traces in Clampfit
+
+% Load data
+folder = 'folder'; 
+run = 'run'; 
+basepath = 'Z:\basepath';
+mousepath = [folder '\' run '.abf'];
+[d,si,h] = abfload([basepath mousepath]); %Sampling at 50 kHz. d: columns number of samples in a single sweep by the number of sweeps in file; s: sampling interval in us; h: file information
+clc
+
+% Select summary induction sweep
+sweep = d(:,16); 
+
+event_search = [0.600 5]; % Cspk AHP
+Fs = 50000; % sampling rate in Hz
+
+% Convert to indices
+e1 = round(Fs*event_search(1));
+e2 = round(Fs*event_search(2));
+figure
+subplot(2,1,1)
+plot(sweep(e1:e2)); hold on; yline(0); hold off
+title('Original signal')
+
+% Find baseline crossings using a smoothed event window
+y = smoothdata(sweep(e1:e2),'movmean',300);
+cross_idx = find(y(1:end-1).*y(2:end) <= 0);
+
+% 1st crossing always defines AHP start
+i1 = cross_idx(1);
+
+% If there is a 2nd crossing, normal case
+if numel(cross_idx) >= 2
+    i2 = cross_idx(2);
+else
+    % If there is only one crossing, integrate to end of signal window
+    i2 = length(y);
+end
+
+subplot(2,1,2)
+plot(y); hold on; yline(0)
+fill([i1:i2 fliplr(i1:i2)], [y(i1:i2)' zeros(1,i2-i1+1)], 'c', 'FaceAlpha',0.3, 'EdgeColor','none')
+hold off
+title('Smoothed signal + AHP')
+
+mV_sample = sum(-y(i1:i2))
+mV_ms = mV_sample * (1/Fs) * 1000
+
+%% Sspk AHP without polyxpoly
 
 % close all
 % clear all
 % clc
 % 
 % % Load data
-% folder = 'KF_250915'; 
-% run = '2025_09_15_0007'; 
-% basepath = 'Z:\home\kayla\Electrophysiology\';
+% folder = 'folder'; 
+% run = 'run'; 
+% basepath = 'Z:\basepath';
 % mousepath = [folder '\' run '.abf'];
 % [d,si,h] = abfload([basepath mousepath]);
 % 
 % % Select sweep
-% sweep = d(:,29:30);
+% sweep = d(:,1:30);
 % 
 % baseline_search = [0.001 0.100]; % s
 % event_search    = [0.151 0.163]; % s
@@ -124,8 +180,8 @@ mV_ms = mean(AHP) * (1/Fs) * 1000 % mV*ms
 % 
 % end
 % 
-% % Output
 % mV_sample = mean(AHP)
 % mV_ms = mean(AHP) * (1/Fs) * 1000
+
 
 
