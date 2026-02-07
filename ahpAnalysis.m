@@ -45,6 +45,7 @@ for ii = 1:size(sweep,2)
     AHP(ii) = A_square(ii) - A_curve(ii);
 end
 
+AHP = AHP';
 mV_sample = mean(AHP) % mV*samples
 mV_ms = mean(AHP) * (1/Fs) * 1000 % mV*ms
 
@@ -126,4 +127,5 @@ mV_ms = mean(AHP) * (1/Fs) * 1000 % mV*ms
 % % Output
 % mV_sample = mean(AHP)
 % mV_ms = mean(AHP) * (1/Fs) * 1000
+
 
