@@ -1,3 +1,30 @@
+close all
+clear all
+clc
+
+folder = 'folder';
+file = 'events';
+cutoff = 50;
+basepath = 'Z:\\home\kayla\Electrophysiology analysis\Strontium recordings for Clampfit analysis\';
+mousepath = [folder '\' file '.abf'];
+[d,si,h] = abfload([basepath mousepath]); clc
+Fs = 50000; % sampling rate in Hz
+d = squeeze(d);
+
+[~, numEvents] = size(d);
+if numEvents < cutoff
+    error(['Matrix has fewer than ' num2str(cutoff) ' events']);
+end
+selectedIdx = randperm(numEvents,cutoff);
+selectedEvents = d(:,selectedIdx);
+
+figure; plot(selectedEvents); hold on
+plot(mean(selectedEvents,2),'k','LineWidth',2); hold off
+for k = 1:size(selectedEvents,2)
+    selectedAmps(k,1) = min(movmean(selectedEvents(:,k),101));
+end
+avgSelectedEvent = min(movmean(mean(selectedEvents,2),101)) % event amplitude using average event from this experiment
+
 %% For strontium event analysis, using cdfEventHistCells
 
 close all
@@ -96,3 +123,4 @@ forAmpHist_sham_WX = reshape(forAmpHist_sham,[],1);
 forAmpHist_opto_WX = reshape(forAmpHist_opto,[],1);
 
 [p,h,stats] = ranksum(forAmpHist_sham_WX,forAmpHist_opto_WX)
+
