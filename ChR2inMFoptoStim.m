@@ -2,6 +2,8 @@ clear all
 close all
 clc
 
+% Preprocessing: lowpass filter at 15 kHz, baseline, create summary traces in Clampfit
+
 experiment = 'experiment';
 basepath = ['Z:\\home\kayla\Electrophysiology analysis\' experiment '\'];
 folder = 'folder';
@@ -49,3 +51,4 @@ mV_ms_base = mV_sample_base * (1/Fs) * 1000 % subtract area of baseline; mV*ms
 %     lm = fitlm(1:length(peaks),peaks)
 
 % end
+
