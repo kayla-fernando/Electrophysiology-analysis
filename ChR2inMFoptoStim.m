@@ -16,7 +16,7 @@ clc
 sweep = d(:,20);
 
 baseline_search = [0.001 0.200]; % search window in s
-event_search = [0.647 0.955]; %[0.647 0.895]; % 248 ms CS duration; fixed stim onset and offset
+event_search = [0.647 0.895]; % 248 ms CS duration; fixed stim onset and offset
 Fs = 50000; % sampling rate in Hz
 
 % Determine if real event
@@ -51,4 +51,5 @@ mV_ms_base = mV_sample_base * (1/Fs) * 1000 % subtract area of baseline; mV*ms
 %     lm = fitlm(1:length(peaks),peaks)
 
 % end
+
 
