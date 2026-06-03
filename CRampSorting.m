@@ -3,7 +3,7 @@
 % Inputs
 
 clearvars -except x y
-parameter = 'Norm EPSC1 (%)';
+parameter = 'Norm EPSC1 (%)'; % ephys metric you want to use
 
 % x = []; % Maximum CR amplitude, sorted from smallest to largest
 % y = cell(1,N); % Cell array, each array element N contains all experiments for a mouse
