@@ -6,7 +6,7 @@ clearvars -except x y
 parameter = 'Norm EPSC1 (%)';
 
 % x = []; % Maximum CR amplitude, sorted from smallest to largest
-% y = cell(1,9); % Cell array, each element contains all experiments for a mouse
+% y = cell(1,N); % Cell array, each array element N contains all experiments for a mouse
 
 % Compute summary statistics
 n   = cellfun(@numel, y);
