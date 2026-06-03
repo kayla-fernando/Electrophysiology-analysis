@@ -4,11 +4,11 @@ close all
 clear all
 clc
 
-% Preprocessing: copy original .abf file, lowpass filter at 15 kHz, baseine all sweeps,
+% Preprocessing: copy original .abf file, lowpass filter at 15 kHz, baseline all sweeps,
 % save Entire File > All Sweeps and Signals 
 
 folder = 'folder';
-basepath = 'Z:\\home\kayla\Electrophysiology analysis\PF-PC LTD\';
+basepath = 'Z:\\home\kayla\Electrophysiology analysis\PF-PC LTD & intrinsic plasticity\';
 search_1 = [0.617 0.667]; % search window in s for EPSC1
 search_2 = [0.717 0.767]; % search window in s for EPSC2
 Fs = 50000; % sampling rate in Hz
